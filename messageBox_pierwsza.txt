@@ -1,0 +1,160 @@
+; wczytywanie i wyświetlanie tekstu wielkimi literami
+; (inne znaki się nie zmieniają)
+.686
+.model flat
+extern _ExitProcess@4 : PROC
+extern _MessageBoxA@16 : PROC
+extern _MessageBoxW@16 : PROC
+extern __write : PROC ; (dwa znaki podkreślenia)
+extern __read : PROC ; (dwa znaki podkreślenia)
+
+
+public _main
+
+.data
+	tekst_pocz db 10, 'Prosćz', 0A9H, ' napisa', 86H, ' jaki', 98H, ' tekst '
+	db 'i nacisn', 0A5H, 86H, ' Enter', 10
+	koniec_t db ?
+	magazyn db 80 dup (?)
+	magazyn_UTF_16 db 160 dup (?)
+	nowa_linia db 10
+	liczba_znakow dd ?
+	utf16 dw ?
+	najwieksza_pozycja dd 0
+	;zero db 0
+	;zero2 dw 00H
+	najwieksza_licznosc dd 0
+	;zero3 db 0
+	;zero4 dw 00H
+	; dh aktualna licznosc
+	; al aktualna_pozycja_slowa
+
+.code
+_main PROC
+	; wyświetlenie tekstu informacyjnego
+	; liczba znaków tekstu
+	mov dh, 0
+	mov ecx, OFFSET tekst_pocz
+	mov ecx,(OFFSET koniec_t) - (OFFSET tekst_pocz)
+	push ecx
+	push OFFSET tekst_pocz ; adres tekstu
+	push 1 ; nr urządzenia (tu: ekran - nr 1)
+	call __write ; wyświetlenie tekstu początkowego
+	add esp, 12 ; usuniecie parametrów ze stosu
+	; czytanie wiersza z klawiatury
+	push 80 ; maksymalna liczba znaków
+	push OFFSET magazyn
+	push 0 ; nr urządzenia (tu: klawiatura - nr 0)
+	call __read ; czytanie znaków z klawiatury
+	add esp, 12 ; usuniecie parametrów ze stosu
+	; kody ASCII napisanego tekstu zostały wprowadzone
+	; do obszaru 'magazyn'
+	; funkcja read wpisuje do rejestru EAX liczbę
+	; wprowadzonych znaków
+	mov liczba_znakow, eax
+	; rejestr ECX pełni rolę licznika obiegów pętli
+	mov ecx, eax
+	mov ebx, 0 ; indeks początkowy
+
+	mov al, 0
+	ptl: mov dl, magazyn[ebx] ; pobranie kolejnego znaku
+
+	;szukanie polskich znaków
+	cmp dl, 0A5H
+	je litera_polska ; skok, gdy 'ą'
+	cmp dl, 0A4H
+	je litera_polska ; skok, gdy 'Ą'
+
+	cmp dl, 086H
+	je litera_polska ; skok, gdy 'ć'
+	cmp dl, 8FH  
+	je litera_polska ; skok, gdy 'Ć'
+
+	cmp dl, 0A9H
+	je litera_polska ; skok, gdy 'ę'
+	cmp dl, 0A8H 
+	je litera_polska ; skok, gdy 'Ę'
+
+	cmp dl, 088H
+	je litera_polska ; skok, gdy 'ł'
+	cmp dl, 9DH
+	je litera_polska ; skok, gdy 'Ł'
+
+	cmp dl, 0E4H
+	je litera_polska ; skok, gdy 'ń'
+	cmp dl, 0E3H
+	je litera_polska ; skok, gdy 'Ń'
+
+	cmp dl, 0A2H
+	je litera_polska ; skok, gdy 'ó'
+	cmp dl, 0E0H
+	je litera_polska ; skok, gdy 'Ó'
+
+	cmp dl, 098H
+	je litera_polska ; skok, gdy 'ś'
+	cmp dl, 097H
+	je litera_polska ; skok, gdy 'Ś'
+
+	cmp dl, 0ABH
+	je litera_polska ; skok, gdy 'ż'
+	cmp dl, 08DH
+	je litera_polska ; skok, gdy 'Ż'
+
+	cmp dl, 0BEH
+	je litera_polska ; skok, gdy 'ź'
+	cmp dl, 0BDH
+	je litera_polska ; skok, gdy 'Ź'
+
+	cmp dl, 20H
+	je spacja ; skok, gdy ' '
+
+	dalej: cmp dh, byte ptr najwieksza_licznosc
+	ja nowy_wiekszy
+	dalejdalej: inc ebx ; inkrementacja indeksu
+	;loop ptl ; sterowanie pętlą
+	dec ecx
+	jnz ptl
+	; wyświetlenie przekształconego tekstu
+	;push liczba_znakow
+	;push OFFSET magazyn
+	;push 1
+	;call __write ; wyświetlenie przekształconego tekstu
+	;add esp, 12 ; usuniecie parametrów ze stosu
+	;push 0
+
+	add byte ptr najwieksza_licznosc, 30H
+	add byte ptr najwieksza_pozycja, 30H ;konwersja z liczby na znak
+
+	push 0 ; stała MB_OK
+	; adres obszaru zawierającego tytuł	
+	push OFFSET najwieksza_pozycja
+	; adres obszaru zawierającego tekst
+	push OFFSET najwieksza_licznosc
+	push 0 ; NULL
+	call _MessageBoxA@16
+
+	push 0 ; stała MB_OK
+	; adres obszaru zawierającego tytuł	
+	push OFFSET najwieksza_pozycja
+	; adres obszaru zawierającego tekst
+	push OFFSET najwieksza_licznosc
+	push 0 ; NULL
+	call _MessageBoxW@16
+
+
+
+	call _ExitProcess@4 ; zakończenie programu
+
+	litera_polska: inc dh
+	jmp dalej
+
+	nowy_wiekszy: mov byte ptr najwieksza_pozycja, al
+	mov byte ptr najwieksza_licznosc, dh
+	jmp dalejdalej
+
+	spacja: mov dh, 0
+	inc al
+	jmp dalejdalej
+	
+_main ENDP
+END

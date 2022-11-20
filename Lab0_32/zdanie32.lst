@@ -1,0 +1,109 @@
+Microsoft (R) Macro Assembler Version 14.33.31630.0	    11/03/22 21:47:57
+zdanie32.asm						     Page 1 - 1
+
+
+				; Przyk³ad wywo³ywania funkcji MessageBoxA i MessageBoxW
+				.686
+				.model flat
+				extern _ExitProcess@4 : PROC
+				extern _MessageBoxA@16 : PROC
+				extern _MessageBoxW@16 : PROC
+				public _main
+ 00000000			.data
+ 00000000 0054 0065 006B	tytul_Unicode dw 'T','e','k','s','t',' ','w',' '
+	   0073 0074 0020
+	   0077 0020
+ 00000010  0066 006F 0072	dw 'f','o','r','m','a','c','i','e',' '
+	   006D 0061 0063
+	   0069 0065 0020
+ 00000022  0055 0054 0046	dw 'U','T','F','-','1','6', 0
+	   002D 0031 0036
+	   0000
+ 00000030 004B 0061 007A	tekst_Unicode dw 'K','a','z','d','y',' ','z','n','a','k',' '
+	   0064 0079 0020
+	   007A 006E 0061
+	   006B 0020
+ 00000046  007A 0061 006A	dw 'z','a','j','m','u','j','e',' '
+	   006D 0075 006A
+	   0065 0020
+ 00000056  0031 0036 0020	dw '1','6',' ','b','i','t','o','w', 0
+	   0062 0069 0074
+	   006F 0077 0000
+ 00000068 54 65 6B 73 74	tytul_Win1250 db 'Tekst w standardzie Windows 1250', 0
+	   20 77 20 73 74
+	   61 6E 64 61 72
+	   64 7A 69 65 20
+	   57 69 6E 64 6F
+	   77 73 20 31 32
+	   35 30 00
+ 00000089 4B 61 7A 64 79	tekst_Win1250 db 'Kazdy znak zajmuje 8 bitow', 0
+	   20 7A 6E 61 6B
+	   20 7A 61 6A 6D
+	   75 6A 65 20 38
+	   20 62 69 74 6F
+	   77 00
+ 00000000			.code
+ 00000000			_main PROC
+ 00000000  6A 00		push 0 ; sta³a MB_OK
+				; adres obszaru zawieraj¹cego tytu³
+ 00000002  68 00000068 R	push OFFSET tytul_Win1250
+				; adres obszaru zawieraj¹cego tekst
+ 00000007  68 00000089 R	push OFFSET tekst_Win1250
+ 0000000C  6A 00		push 0 ; NULL
+ 0000000E  E8 00000000 E	call _MessageBoxA@16
+ 00000013  6A 00		push 0 ; stala MB_OK
+				; adres obszaru zawieraj¹cego tytu³
+ 00000015  68 00000000 R	push OFFSET tytul_Unicode
+				; adres obszaru zawieraj¹cego tekst
+ 0000001A  68 00000030 R	push OFFSET tekst_Unicode
+ 0000001F  6A 00		push 0 ; NULL
+ 00000021  E8 00000000 E	call _MessageBoxW@16
+ 00000026  6A 00		push 0 ; kod powrotu programu
+ 00000028  E8 00000000 E	call _ExitProcess@4
+ 0000002D			_main ENDP
+				END
+Microsoft (R) Macro Assembler Version 14.33.31630.0	    11/03/22 21:47:57
+zdanie32.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	32 Bit	 000000A4 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 0000002D Para	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+_main  . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000002D Public
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000000h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+_ExitProcess@4 . . . . . . . . .	L Near	 00000000 FLAT	External
+_MessageBoxA@16  . . . . . . . .	L Near	 00000000 FLAT	External
+_MessageBoxW@16  . . . . . . . .	L Near	 00000000 FLAT	External
+tekst_Unicode  . . . . . . . . .	Word	 00000030 _DATA	
+tekst_Win1250  . . . . . . . . .	Byte	 00000089 _DATA	
+tytul_Unicode  . . . . . . . . .	Word	 00000000 _DATA	
+tytul_Win1250  . . . . . . . . .	Byte	 00000068 _DATA	
+
+	   0 Warnings
+	   0 Errors
