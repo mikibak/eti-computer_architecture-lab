@@ -11,7 +11,7 @@ public _main
 		obszar db 12 dup (?)
 		znaki db 12 dup (?)
 		dekoder db '0123456789ABC'
-		dziesiec dd 13 ; mno¿nik
+		dziesiec dd 13 ; mnoÅ¼nik
 	.code
 	
 		wyswietl_EAX_U2_b13 PROC
@@ -21,14 +21,14 @@ public _main
 			jl mniejsza_od_zero
 			;bt eax, 7
 			;jc mniejsza_od_zero
-			;jeœli wieksza to znak '+'
+			;jeÅ›li wieksza to znak '+'
 			mov byte PTR znaki [1], 2BH
-			wieksza_od_zero:  ;wiêksza od zera LUB równa
+			wieksza_od_zero:  ;wiÄ™ksza od zera LUB rÃ³wna
 			mov esi, 10 ; indeks w tablicy 'znaki'
-			mov ebx, 13 ; dzielnik równy 10
+			mov ebx, 13 ; dzielnik rÃ³wny 10
 
 			konwersja:
-			mov edx, 0 ; zerowanie starszej czêœci dzielnej
+			mov edx, 0 ; zerowanie starszej czÄ™Å›ci dzielnej
 			div ebx ; dzielenie przez 10, reszta w EDX,
 			; iloraz w EAX
 			;add dl, 30H ; zamiana reszty z dzielenia na kod
@@ -40,8 +40,8 @@ public _main
 			dec esi ; zmniejszenie indeksu
 			cmp eax, 0 ; sprawdzenie czy iloraz = 0
 			jne konwersja ; skok, gdy iloraz niezerowy
-			; wype³nienie pozosta³ych bajtów spacjami i wpisanie
-			; znaków nowego wiersza
+			; wypeÅ‚nienie pozostaÅ‚ych bajtÃ³w spacjami i wpisanie
+			; znakÃ³w nowego wiersza
 
 			wypeln:
 			;or esi, esi ; sprawdzenie czy ESI = 0
@@ -54,12 +54,12 @@ public _main
 			wyswietl:
 			mov byte PTR znaki [0], 0AH ; kod nowego wiersza
 			mov byte PTR znaki [11], 0AH ; kod nowego wiersza
-			; wyœwietlenie cyfr na ekranie
-			push dword PTR 12 ; liczba wyœwietlanych znaków
-			push dword PTR OFFSET znaki ; adres wyœw. obszaru
-			push dword PTR 1; numer urz¹dzenia (ekran ma numer 1)
-			call __write ; wyœwietlenie liczby na ekranie
-			add esp, 12 ; usuniêcie parametrów ze stosu
+			; wyÅ›wietlenie cyfr na ekranie
+			push dword PTR 12 ; liczba wyÅ›wietlanych znakÃ³w
+			push dword PTR OFFSET znaki ; adres wyÅ›w. obszaru
+			push dword PTR 1; numer urzÄ…dzenia (ekran ma numer 1)
+			call __write ; wyÅ›wietlenie liczby na ekranie
+			add esp, 12 ; usuniÄ™cie parametrÃ³w ze stosu
 
 
 			popa
@@ -73,22 +73,22 @@ public _main
 
 
 		wczytaj_EAX_U2_b13 PROC
-			; wczytywanie liczby dziesiêtnej z klawiatury – po
-			; wprowadzeniu cyfr nale¿y nacisn¹æ klawisz Enter
-			; liczba po konwersji na postaæ binarn¹ zostaje wpisana
+			; wczytywanie liczby dziesiÄ™tnej z klawiatury â€“ po
+			; wprowadzeniu cyfr naleÅ¼y nacisnÄ…Ä‡ klawisz Enter
+			; liczba po konwersji na postaÄ‡ binarnÄ… zostaje wpisana
 			; do rejestru EAX
 			; deklaracja tablicy do przechowywania wprowadzanych cyfr
 			; (w obszarze danych)
 			
-			; max iloœæ znaków wczytywanej liczby
+			; max iloÅ›Ä‡ znakÃ³w wczytywanej liczby
 			push dword PTR 12
-			push dword PTR OFFSET obszar ; adres obszaru pamiêci
-			push dword PTR 0; numer urz¹dzenia (0 dla klawiatury)
-			call __read ; odczytywanie znaków z klawiatury
-			; (dwa znaki podkreœlenia przed read)
-			add esp, 12 ; usuniêcie parametrów ze stosu
-			; bie¿¹ca wartoœæ przekszta³canej liczby przechowywana jest
-			; w rejestrze EAX; przyjmujemy 0 jako wartoœæ pocz¹tkow¹
+			push dword PTR OFFSET obszar ; adres obszaru pamiÄ™ci
+			push dword PTR 0; numer urzÄ…dzenia (0 dla klawiatury)
+			call __read ; odczytywanie znakÃ³w z klawiatury
+			; (dwa znaki podkreÅ›lenia przed read)
+			add esp, 12 ; usuniÄ™cie parametrÃ³w ze stosu
+			; bieÅ¼Ä…ca wartoÅ›Ä‡ przeksztaÅ‚canej liczby przechowywana jest
+			; w rejestrze EAX; przyjmujemy 0 jako wartoÅ›Ä‡ poczÄ…tkowÄ…
 			mov eax, 0
 			mov ebx, OFFSET obszar ; adres obszaru ze znakami
 
@@ -96,27 +96,27 @@ public _main
 			pocz_konw:
 				mov dl, [ebx] ; pobranie kolejnego bajtu
 				inc esi ; inkrementacja indeksu
-				cmp dl, 10 ; sprawdzenie czy naciœniêto Enter
-				je gotowe ; skok do koñca podprogramu
-				cmp dl, 2DH ; sprawdzenie czy naciœniêto -
-				je minusik ; skok do koñca podprogramu
-				cmp dl, 2BH ; sprawdzenie czy naciœniêto +
-				je plusik ; skok do koñca podprogramu
-				; sprawdzenie czy wprowadzony znak jest cyfr¹ 0, 1, 2 , ..., 9
+				cmp dl, 10 ; sprawdzenie czy naciÅ›niÄ™to Enter
+				je gotowe ; skok do koÅ„ca podprogramu
+				cmp dl, 2DH ; sprawdzenie czy naciÅ›niÄ™to -
+				je minusik ; skok do koÅ„ca podprogramu
+				cmp dl, 2BH ; sprawdzenie czy naciÅ›niÄ™to +
+				je plusik ; skok do koÅ„ca podprogramu
+				; sprawdzenie czy wprowadzony znak jest cyfrÄ… 0, 1, 2 , ..., 9
 				cmp dl, '0'
 				jb pocz_konw ; inny znak jest ignorowany
 				cmp dl, '9'
 				ja sprawdzaj_dalej
-				sub dl, '0' ; zamiana kodu ASCII na wartoœæ cyfry
+				sub dl, '0' ; zamiana kodu ASCII na wartoÅ›Ä‡ cyfry
 			dopisz:
-				movzx ecx, dl ; przechowanie wartoœci cyfry w
+				movzx ecx, dl ; przechowanie wartoÅ›ci cyfry w
 				; rejestrze ECX
-				; mno¿enie wczeœniej obliczonej wartoœci razy 10
+				; mnoÅ¼enie wczeÅ›niej obliczonej wartoÅ›ci razy 10
 				mul dword PTR dziesiec
 				add eax, ecx ; dodanie ostatnio odczytanej cyfry
 				inc ebx
-				jmp pocz_konw ; skok na pocz¹tek pêtli konwersji
-			; sprawdzenie czy wprowadzony znak jest cyfr¹ A, B, ..., F
+				jmp pocz_konw ; skok na poczÄ…tek pÄ™tli konwersji
+			; sprawdzenie czy wprowadzony znak jest cyfrÄ… A, B, ..., F
 			sprawdzaj_dalej:
 				cmp dl, 'A'
 				jb pocz_konw ; inny znak jest ignorowany
@@ -124,7 +124,7 @@ public _main
 				ja sprawdzaj_dalej2
 				sub dl, 'A' - 10 ; wyznaczenie kodu binarnego
 				jmp dopisz
-			; sprawdzenie czy wprowadzony znak jest cyfr¹ a, b, ..., f
+			; sprawdzenie czy wprowadzony znak jest cyfrÄ… a, b, ..., f
 			sprawdzaj_dalej2:
 				cmp dl, 'a'
 				jb pocz_konw ; inny znak jest ignorowany
@@ -133,7 +133,7 @@ public _main
 				sub dl, 'a' - 10
 				jmp dopisz
 			gotowe:
-			;sprawdzenie czy by³ minus
+			;sprawdzenie czy byÅ‚ minus
 			cmp edi, 12
 			je negacja
 			ret
@@ -150,13 +150,13 @@ public _main
 
 		_main PROC
 			;mov EAX, 144
-			;call wyswietl_EAX_U2_b13   ; -> w konsoli powinno pojawiæ siê: +b1
+			;call wyswietl_EAX_U2_b13   ; -> w konsoli powinno pojawiÄ‡ siÄ™: +b1
 			;mov EAX, -144
-			;call wyswietl_EAX_U2_b13   ; -> w konsoli powinno pojawiæ siê: -b1
+			;call wyswietl_EAX_U2_b13   ; -> w konsoli powinno pojawiÄ‡ siÄ™: -b1
 
 			call wczytaj_EAX_U2_b13    ; wpisujemy 5
 			sub eax, 10
-			call wyswietl_EAX_U2_b13       ; w konsoli wyœwietla siê -5
+			call wyswietl_EAX_U2_b13       ; w konsoli wyÅ›wietla siÄ™ -5
 
 			push 0
 			call _ExitProcess@4
