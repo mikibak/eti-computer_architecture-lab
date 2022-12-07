@@ -17,7 +17,7 @@ int main()
 	int size;
 	
 	
-	printf("\nProsze wpisaæ rozmiar: ");
+	printf("\nProsze wpisaÄ‡ rozmiar: ");
 	scanf_s("%d", &size, 12);
 
 	int* tab1 = malloc(size * sizeof(int));

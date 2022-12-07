@@ -13,15 +13,15 @@ public _merge_reversed
 .code
 
 _merge_reversed PROC
-	push ebp ; zapisanie zawartoúci EBP na stosie
-	mov ebp,esp ; kopiowanie zawartoúci ESP do EBP
-	push ebx ; przechowanie zawartoúci rejestru EBX
-	push esi ; przechowanie zawartoúci rejestru ESI
-	push edi ; przechowanie zawartoúci rejestru EDI
+	push ebp ; zapisanie zawarto≈õci EBP na stosie
+	mov ebp,esp ; kopiowanie zawarto≈õci ESP do EBP
+	push ebx ; przechowanie zawarto≈õci rejestru EBX
+	push esi ; przechowanie zawarto≈õci rejestru ESI
+	push edi ; przechowanie zawarto≈õci rejestru EDI
 
 	mov esi, [ebp+8] ; adres tablicy tab1
-	mov ecx, [ebp+16] ; liczba elementÛw tablicy
-	mov edi, offset tablica ;adres w tablicy z≥πczonej
+	mov ecx, [ebp+16] ; liczba element√≥w tablicy
+	mov edi, offset tablica ;adres w tablicy z≈ÇƒÖczonej
 
 	;sprawdzenie czy size < 32
 	cmp ecx, 32
@@ -32,10 +32,10 @@ _merge_reversed PROC
 		mov [edi], eax
 		add esi, 4 ; wyznaczenie adresu kolejnego elementu w tab1
 		add edi, 4 ; wyznaczenie adresu kolejnego elementu w tablicy
-	loop ptl ; organizacja pÍtli
+	loop ptl ; organizacja pƒôtli
 
-	;obliczenie liczby bajtÛw, w≥oøenie do ebx
-	mov ecx, [ebp+16] ; liczba elementÛw tablicy
+	;obliczenie liczby bajt√≥w, w≈Ço≈ºenie do ebx
+	mov ecx, [ebp+16] ; liczba element√≥w tablicy
 	mov eax, ecx
 	mov edx, 0
 	mov esi, 8
@@ -51,16 +51,16 @@ _merge_reversed PROC
 		mov eax, [esi]
 		mov [edi], eax
 		add esi, 4 ; wyznaczenie adresu kolejnego elementu w tab1
-	loop ptl2 ; organizacja pÍtli2
+	loop ptl2 ; organizacja pƒôtli2
 
 	mov eax, offset tablica
 
 	koniec:
-	pop edi ; odtworzenie zawartoúci rejestrÛw
+	pop edi ; odtworzenie zawarto≈õci rejestr√≥w
 	pop esi
 	pop ebx
 	pop ebp
-	ret ; powrÛt do programu g≥Ûwnego
+	ret ; powr√≥t do programu g≈Ç√≥wnego
 
 	zly_rozmiar:
 		mov eax, 0
@@ -70,20 +70,20 @@ _merge_reversed ENDP
 
 
 _mse_loss PROC
-	push ebp ; zapisanie zawartoúci EBP na stosie
-	mov ebp,esp ; kopiowanie zawartoúci ESP do EBP
-	push ebx ; przechowanie zawartoúci rejestru EBX
-	push esi ; przechowanie zawartoúci rejestru ESI
-	push edi ; przechowanie zawartoúci rejestru EDI
+	push ebp ; zapisanie zawarto≈õci EBP na stosie
+	mov ebp,esp ; kopiowanie zawarto≈õci ESP do EBP
+	push ebx ; przechowanie zawarto≈õci rejestru EBX
+	push esi ; przechowanie zawarto≈õci rejestru ESI
+	push edi ; przechowanie zawarto≈õci rejestru EDI
 
 	mov ebx, [ebp+8] ; adres tablicy tab1
 	mov esi, [ebp+12] ; adres tablicy tab2
-	mov ecx, [ebp+16] ; liczba elementÛw tablicy
+	mov ecx, [ebp+16] ; liczba element√≥w tablicy
 
 	mov eax, ecx
 	mov edx, 0
 	mov edi, 2
-	div edi ;liczbÍ elementÛw dzielÍ przez 2
+	div edi ;liczbƒô element√≥w dzielƒô przez 2
 
 	mov eax, edx ;reszta do eax
 	mov edx, 0 
@@ -100,11 +100,11 @@ _mse_loss PROC
 		add edi, eax
 		add ebx, 4 ; wyznaczenie adresu kolejnego elementu
 		add esi, 4 ; wyznaczenie adresu kolejnego elementu
-	loop ptl ; organizacja pÍtli
+	loop ptl ; organizacja pƒôtli
 
-	mov eax, edi ;suma kwadratÛw do eax w celu podzielenia
+	mov eax, edi ;suma kwadrat√≥w do eax w celu podzielenia
 	mov edx, 0
-	div dword ptr [ebp+16] ;dzielenie przez sumÍ
+	div dword ptr [ebp+16] ;dzielenie przez sumƒô
 	; 
 	mov esi, eax ;calosc z dziel przez n
 	mov edi, edx ;reszta z dziel przez n
@@ -119,11 +119,11 @@ _mse_loss PROC
 
 	koniec:
 	mov eax, esi
-	pop edi ; odtworzenie zawartoúci rejestrÛw
+	pop edi ; odtworzenie zawarto≈õci rejestr√≥w
 	pop esi
 	pop ebx
 	pop ebp
-	ret ; powrÛt do programu g≥Ûwnego
+	ret ; powr√≥t do programu g≈Ç√≥wnego
 
 	w_gore:
 		inc esi
@@ -132,12 +132,12 @@ _mse_loss ENDP
 
 
 _dot_product PROC
-	push ebp ; zapisanie zawartoúci EBP na stosie
-	mov ebp,esp ; kopiowanie zawartoúci ESP do EBP
-	push ebx ; przechowanie zawartoúci rejestru EBX
+	push ebp ; zapisanie zawarto≈õci EBP na stosie
+	mov ebp,esp ; kopiowanie zawarto≈õci ESP do EBP
+	push ebx ; przechowanie zawarto≈õci rejestru EBX
 	mov ebx, [ebp+8] ; adres tablicy tab1
 	mov esi, [ebp+12] ; adres tablicy tab2
-	mov ecx, [ebp+16] ; liczba elementÛw tablicy
+	mov ecx, [ebp+16] ; liczba element√≥w tablicy
 	mov edi, 0 ;iloczyn
 	dec ecx
 	; wpisanie kolejnego elementu tablicy 1 do rejestru EAX
@@ -147,20 +147,20 @@ _dot_product PROC
 		add edi, eax
 		add ebx, 4 ; wyznaczenie adresu kolejnego elementu
 		add esi, 4 ; wyznaczenie adresu kolejnego elementu
-	loop ptl ; organizacja pÍtli
-	mov eax, edi ;zwracana wartoúÊ w rejesrze eax
-	pop ebx ; odtworzenie zawartoúci rejestrÛw
+	loop ptl ; organizacja pƒôtli
+	mov eax, edi ;zwracana warto≈õƒá w rejesrze eax
+	pop ebx ; odtworzenie zawarto≈õci rejestr√≥w
 	pop ebp
-	ret ; powrÛt do programu g≥Ûwnego
+	ret ; powr√≥t do programu g≈Ç√≥wnego
 _dot_product ENDP
 
 _replace_below_zero PROC
-	push ebp ; zapisanie zawartoúci EBP na stosie
-	mov ebp,esp ; kopiowanie zawartoúci ESP do EBP
-	push ebx ; przechowanie zawartoúci rejestru EBX
+	push ebp ; zapisanie zawarto≈õci EBP na stosie
+	mov ebp,esp ; kopiowanie zawarto≈õci ESP do EBP
+	push ebx ; przechowanie zawarto≈õci rejestru EBX
 	mov esi, [ebp+8] ; adres tablicy tab
-	mov ecx, [ebp+12] ; liczba elementÛw tablicy
-	mov edi, [ebp+16] ; liczba na ktÛrπ bÍdzie zamieniane
+	mov ecx, [ebp+12] ; liczba element√≥w tablicy
+	mov edi, [ebp+16] ; liczba na kt√≥rƒÖ bƒôdzie zamieniane
 
 	;dec ecx
 	; wpisanie kolejnego elementu tablicy do rejestru EAX
@@ -170,10 +170,10 @@ _replace_below_zero PROC
 		mov [esi], edi
 		nie_zamieniaj:
 		add esi, 4 ; wyznaczenie adresu kolejnego elementu
-	loop ptl ; organizacja pÍtli
+	loop ptl ; organizacja pƒôtli
 	mov eax, esi ;adres tablicy
-	pop ebx ; odtworzenie zawartoúci rejestrÛw
+	pop ebx ; odtworzenie zawarto≈õci rejestr√≥w
 	pop ebp
-	ret ; powrÛt do programu g≥Ûwnego
+	ret ; powr√≥t do programu g≈Ç√≥wnego
 _replace_below_zero ENDP
 END
