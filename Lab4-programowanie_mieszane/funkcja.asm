@@ -5,6 +5,7 @@ public _srednia_harm
 public _nowy_exp
 public _dodaj_SSE, _pierwiastek_SSE, _odwrotnosc_SSE
 public _suma_tablic_charow, _int2float, _pm_jeden
+public _find_max_range
 
 .data
 
@@ -12,8 +13,41 @@ public _suma_tablic_charow, _int2float, _pm_jeden
 	n dd ?
 	jeden dd 1.0
 	piate_zadanie dd 4 dup (1.0)
+	g dd 9.81
 
 .code
+
+_find_max_range PROC
+	push ebp ; zapisanie zawartoœci EBP na stosie
+	mov ebp,esp ; kopiowanie zawartoœci ESP do EBP
+	push ebx ; przechowanie zawartoœci rejestru EBX
+	push esi ; przechowanie zawartoœci rejestru ESI
+	push edi ; przechowanie zawartoœci rejestru EDI
+
+	fld dword ptr [ebp+12] ;alfa
+	fsincos ;na ST(0) i ST(1) sinus i cosinus
+
+	fmulp st(1), st(0) ; obliczenie sin * cos
+
+	fld1
+	fld1
+	faddp ; ST(0) 2 ST(1) sin cos
+	fmulp ;ST(0) 2 sin cos
+
+	fld dword ptr [ebp+8] ;v
+	fld dword ptr [ebp+8] ;v
+	fmulp ;ST(0) v*v ST(1) 2 sin cos 
+	fmulp
+
+	fld dword ptr g
+	fdivp
+
+	pop edi ; odtworzenie zawartoœci rejestrów
+	pop esi
+	pop ebx
+	pop ebp
+	ret ; powrót do programu g³ównego
+_find_max_range ENDP
 
 _pm_jeden PROC
 	push ebp

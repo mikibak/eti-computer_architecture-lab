@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <xmmintrin.h>
 
 float srednia_harm(float* tablica, unsigned int n);
 float nowy_exp(float x);
@@ -6,6 +7,8 @@ float y_do_x(float y, float x);
 char* suma_tablic_charow(char liczby_A[], char liczby_B[], char* liczby_suma);
 void int2float(int* calkowite, float* zmienno_przec);
 void pm_jeden(float* tabl);
+float find_max_range(float v, float alpha);
+_m128 mul_at_once(_m128 one, _m128 two);
 
 int write_array(float* tab, int size) {
 	printf("[ ");
@@ -83,6 +86,11 @@ int main()
 	printf("\n%f %f %f %f\n", tablica[0],
 		tablica[1], tablica[2], tablica[3]);
 	*/
+
+	float v = 2.0f;
+	float alpha = 45.0f;
+	float range = find_max_range(v, alpha);
+	printf("%f\n", range);
 
 	return 0;
 }

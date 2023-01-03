@@ -145,6 +145,9 @@
   <ItemGroup>
     <MASM Include="funkcja.asm" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="xmmintrin.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />
