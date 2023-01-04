@@ -1,0 +1,135 @@
+#include <stdio.h>
+#include <xmmintrin.h>
+
+float srednia_harm(float* tablica, unsigned int n);
+float nowy_exp(float x);
+float y_do_x(float y, float x);
+char* suma_tablic_charow(char liczby_A[], char liczby_B[], char* liczby_suma);
+void int2float(int* calkowite, float* zmienno_przec);
+void pm_jeden(float* tabl);
+float find_max_range(float v, float alpha);
+
+float objetosc_stozka(unsigned int big_r, unsigned int small_r, float h);
+__m128 szybki_max(short int t1[], short int t2[]);
+
+int write_array(float* tab, int size) {
+	printf("[ ");
+	for (int i = 0; i < size; i++) {
+		printf("%f ", tab[i]);
+	}
+	printf("]\n");
+}
+
+int write_array_of_shorts(short int* tab, int size) {
+	printf("[ ");
+	for (int i = 0; i < size; i++) {
+		printf("%hd ", tab[i]);
+	}
+	printf("]\n");
+}
+
+
+int main()
+{
+	/*
+	int size;
+	
+	printf("\nProsze wpisać rozmiar: ");
+	scanf_s("%d", &size, 12);
+
+	float* tab1 = malloc(size * sizeof(float));
+
+	char c;
+	printf("\nProsze napisac %d liczb tab1: ", size);
+	for (int i = 0; i < 5; i++) {
+		scanf_s("%f%c", &tab1[i], &c, 12);
+		if (c == 10) break;
+	}
+	
+	float wynik = 0;
+	wynik = srednia_harm(tab1, size);
+
+	write_array(tab1, size);
+	printf("Wynik: %f", wynik);
+	*/
+
+	/*
+	//y do x
+	float x = 3.0f;
+	float y = 2.0f;
+
+	float potega = y_do_x(y, x);
+	printf("Potega: %f", potega);
+	*/
+
+	/*
+	//5.3 suma charów
+	char liczby_A[16] = { -128, -127, -126, -125, -124, -123, -122,
+		-121, 120, 121, 122, 123, 124, 125, 126, 127 };
+	char liczby_B[16] = { -3, -3, -3, -3, -3, -3, -3, -3,
+		3, 3, 3, 3, 3, 3, 3, 3 };
+	char* liczby_suma = malloc(16 * sizeof(char));
+	suma_tablic_charow(liczby_A, liczby_B, liczby_suma);
+
+	printf("[ ");
+	for (int i = 0; i < 16; i++) {
+		printf("%d ", (int)liczby_suma[i]);
+	}
+	printf("]\n");
+	*/
+
+	/*
+	//5.4 int to float
+	int a[2] = { -17, 24 };
+	float r[4];
+	// podany rozkaz zapisuje w pamięci od razu 128 bitów,
+	// więc muszą być 4 elementy w tablicy
+	int2float(a, r);
+	printf("\nKonwersja = %f %f\n", r[0], r[1]);
+	*/
+
+	/*
+	//5.5 
+	float tablica[4] = { 27.5,143.57,2100.0, -3.51 };
+	printf("\n%f %f %f %f\n", tablica[0],
+		tablica[1], tablica[2], tablica[3]);
+	pm_jeden(tablica);
+	printf("\n%f %f %f %f\n", tablica[0],
+		tablica[1], tablica[2], tablica[3]);
+	*/
+
+	/*
+	float v = 2.0f;
+	float alpha = 45.0f;
+	float range = find_max_range(v, alpha);
+	printf("%f\n", range);
+	*/
+
+	unsigned int big_r0 = 6;
+	unsigned int small_r0 = 2;
+	float h0 = 5.3f;
+
+	unsigned int big_r1 = 7;
+	unsigned int small_r1 = 3;
+	float h1 = 4.2f;
+
+	unsigned int big_r2 = 8;
+	unsigned int small_r2 = 4;
+	float h2 = 6.1f;
+
+	float wynik0 = objetosc_stozka(big_r0, small_r0, h0);
+	printf("%f\n", wynik0);
+
+	float wynik1 = objetosc_stozka(big_r1, small_r1, h1);
+	printf("%f\n", wynik1);
+
+	float wynik2 = objetosc_stozka(big_r2, small_r2, h2);
+	printf("%f\n", wynik2);
+
+	short int val1[8] = { 1, -1, 2, -2, 3, -3, 4, -4 };
+	short int val2[8] = { -4, -3, -2, -1, 0, 1, 2, 3 };
+	__m128 t1 = szybki_max(val1, val2); // -> t1.m128_i16 = {1, -1, 2, -1, 3, 1, 4, 3}
+	write_array_of_shorts(t1.m128_i16, 8);
+
+	return 0;
+}

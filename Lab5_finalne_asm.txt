@@ -1,5 +1,5 @@
 .686
-.XMM ; zezwolenie na asemblacjÍ rozkazÛw grupy SSE
+.XMM ; zezwolenie na asemblacjƒô rozkaz√≥w grupy SSE
 .model flat
 
 public _objetosc_stozka
@@ -33,11 +33,11 @@ _szybki_max PROC
 _szybki_max ENDP
 
 _objetosc_stozka PROC
-	push ebp ; zapisanie zawartoúci EBP na stosie
-	mov ebp,esp ; kopiowanie zawartoúci ESP do EBP
-	push ebx ; przechowanie zawartoúci rejestru EBX
-	push esi ; przechowanie zawartoúci rejestru ESI
-	push edi ; przechowanie zawartoúci rejestru EDI
+	push ebp ; zapisanie zawarto≈õci EBP na stosie
+	mov ebp,esp ; kopiowanie zawarto≈õci ESP do EBP
+	push ebx ; przechowanie zawarto≈õci rejestru EBX
+	push esi ; przechowanie zawarto≈õci rejestru ESI
+	push edi ; przechowanie zawarto≈õci rejestru EDI
 
 	fild dword ptr [ebp+8] ;big_r
 	fild dword ptr [ebp+8] ;big_r
@@ -56,11 +56,11 @@ _objetosc_stozka PROC
 	fmulp
 	fdiv trzy
 
-	pop edi ; odtworzenie zawartoúci rejestrÛw
+	pop edi ; odtworzenie zawarto≈õci rejestr√≥w
 	pop esi
 	pop ebx
 	pop ebp
-	ret ; powrÛt do programu g≥Ûwnego
+	ret ; powr√≥t do programu g≈Ç√≥wnego
 _objetosc_stozka ENDP
 
 END
