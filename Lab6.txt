@@ -11,7 +11,7 @@ linia PROC
 	push si
 
 	inc cs:licznik
-	cmp cs:licznik, 10
+	cmp cs:licznik, 2
 	jb rysuj
 
 	;inaczej trzeba zmienić kolor i zresetować licznik

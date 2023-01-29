@@ -8,9 +8,21 @@ public _main
 
 .data
 	liczba dd 12.875
+	liczba2 dd 5
 .code
 _main PROC
+	inc liczba
 	mov eax, liczba
+
+	mov eax, 2
+	push eax
+	finit
+	fld dword ptr [esp]
+	fld dword ptr [esp]
+	fmul
+
+	add liczba2, 2
+
 	push 0 ; kod powrotu programu
 	call _ExitProcess@4
 _main ENDP
