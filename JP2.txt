@@ -1,1 +1,0 @@
-main = putStrLn(show(1:7:13:[2]++[2,1]))
